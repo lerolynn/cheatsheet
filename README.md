@@ -1,23 +1,55 @@
-# Java Cheatsheet for Algorithms and Data Structures
+# Algorithms and Data Structures
+
+## Table of Contents
+
+* Common Functions
+* Built-in Libraries
+  * Array
+    * String
+      * Char Array
+      * StringBuilder
+    * Dynamic Array
+    * Linked List
+    * Stack and Queue
+      * Stack
+      * Queue
+    * HashTables
+      * HashSet
+      * HashMap
+    * Trees
+    * Graphs
+    * Searching
+
+* Techniques
+  * Bit Manipulations
+  * Recursion
+  * BFS (Breadth First Search)
+  * DFS (Depth First Search)
 
 ## Common functions
+
 ```java
 // Square
 Math.pow(n, 2); // n squared
 Integer.MAX_VALUE;
+
+// Comparator
+(e1, e2) -> e1.getValue() - e2.getValue();
 ```
 
-## Built in Libraries
-### Arrays
-```java
-// Initialize
-int[] a = new int[5];
-int[] b = {1,2,3};
+## Built-in Libraries
 
-// Accessing
+### Arrays
+
+```java
+// Instantiating
+int[] a = new int[5]; // declare and allocate memory to array
+int[] b = {1,2,3}; // Declare array literal
+
+// Operations
 a.length;
 
-//Sorting
+Arrays.copyOfRange(arr, 0, 2); // Splicing Array
 Arrays.sort(a); // Quicksort, O(n log n) time
 
 // Checker to empty array
@@ -25,7 +57,8 @@ if (arr.length == 0) return new int[0];
 ```
 
 ### Strings
-Strings are IMMUTABLE, so CANNOT compare strings using "=="
+
+Strings are IMMUTABLE, so CANNOT compare strings using "==". Any changes to strings takes o(n) time.
 
 ```java
 // Initialize
@@ -36,22 +69,14 @@ String s2 = s1; // s2 == s1 -> Same object
 
 // Get string length
 s1.length();
-
-// Accessing
 s1.charAt(0); // Get character at index 0
 
-// Compare string value
-s1.equals(s3);
+s1.equals(s3); // Compare string value
 s1.compareTo(s3);
 
-// Concatenate Strings - O(N) time per concatenation
-s1 += "!"; // s1 becomes "Hi!"
-
-// Find position
+s1 += "!"; // s1 becomes "Hi!" // Concatenate Strings - O(N) time per concatenation
 s1.indexOf("i"); // position of 1st occurrence of i
 s1.lastIndexOf("i", 4); // position of last i, starting at position 4
-
-// Splicing
 s1.substring(3,8); // Splice from position 3 inclusive to 8 (non inclusive)
 
 // Casting
@@ -59,6 +84,7 @@ int a = s1.charAt(0) - '0' // Get number from digits 0 - 9 based off ascii chara
 ```
 
 #### Char Array
+
 Convert strings to char array to become mutable
 
 ```java 
@@ -68,16 +94,19 @@ str[2] = '.';
 ```
 
 #### StringBuilder
+
 Use StringBuilder to if have to concatenate strings often. Runs concatenation in O(N) time overall,
 
 ```java
 StringBuilder str = new StringBuilder();
-str.append("hello") // O(N) time no matter how many concatenations are done
+str.append("hello");
 
 // Convert StringBuilder to string object after concatenation is done
 String s = str.toString();
 char[] ch = s.toCharArray();
 String s = String.valueOf(arr); // Convert character array to string
+
+str.setLength(0); // clear string builder
 
 // Split string - (n < 0 - don't remove empty string; n > 0; split max n times)
 String[] arr = s.split("," 0); // Split into array of max size, remove trailing empty strings
@@ -93,15 +122,16 @@ String a = Integer.toBinaryString(A); // Convert to binary in string format
 ```
 
 ### Dynamic Arrays
+
 ```java
-// Initialize
+// Constructor
 List<Integer> v0 = new ArrayList<>(); // Initialize new array
 List<Integer> v1 = new ArrayList<>(Arrays.asList(a)); // Cast array a to vector
 
 List<Integer> v2 = v1; // Reference to v1
 List<Integer> v3 = new ArrayList<>(v1) // Make actual copy of v1
 
-// Access
+// Operations
 v1.size(); // Get length
 v1.get(0); // Get element at index 0
 v1.set(1, 2); // Set element at index 1 to be 2
@@ -114,13 +144,15 @@ collections.sort(v1); // Sort array v1
 ```
 
 ### Linked List
+
 ```java
-// Initialize
+// Constructor
 LinkedList<String> ll = new LinkedList<String>();
 
-// Access
+// Operations
 ll.size(); // Get length
-ll.add("A"); // Add element
+ll.add("A"); // Add element at end of linked list
+ll.addFirst("A"); // Add to start of linked list
 ll.add(0, "E"); // Add element E at index 0
 
 ll.set(1, "B"); // Change element at index 1 to B
@@ -136,29 +168,82 @@ ll.contains("A"); // Return true if ll contains element A
 ll.toString(); // Cast to string
 ```
 
-### Queues
+## Stacks and Queues
+
+### Stacks
+
+Last-in-first-out (LIFO). Newest element added to stack processed first
+Push, pop
+
 ```java
+// Constructor
+Stack<Integer> stack = new Stack<>();
+
+// Operations
+stack.push(1); // Push element to top of stack
+stack.peek(); // Returns element at top of stack, null if stack is empty
+stack.pop(); // Returns element at top of stack, removes element, returns null if stack is empty
+
+stack.search(); // Returns position of element from top of stack, -1 if not in stack
+stack.empty(); // Returns true if stack is empty
+
+```
+
+### Queues
+
+First-in-first-out (FIFO), First element added to queue processed first
+Enqueue, Dequeue
+
+```java
+// Constructor
 Queue<Integer> q = new LinkedList(); // Initialize new queue
 
+// Operations
 q.offer(5); // Queue new element
 q.poll(); // Dequeue
 q.peek(); // Get first element, return null if queue is empty
 q.size(); // Get size of queue
 ```
 
+### Priority Queue
+
+PriorityQueue in Java implements a min heap.
+
+```java
+// Constructor
+PriorityQueue<E> pq = new PriorityQueue<E>();
+PriorityQueue<E> pq = new PriorityQueue<E>(Collection<E> c);
+
+// Operations
+pq.add(10); // Add items
+pq.peek(); // get min item of pq
+pq.poll(); // get and remove item
+
+```
+
+Implementing **max heap**
+
+```java
+// Constructor
+PriorityQueue<E> pq = new PriorityQueue<E>(original.size(), Collections.reverseOrder());
+Queue<Map.Entry<Integer,Integer>> heap = new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
+```
 
 ## Hash Tables
+
 Types of hashtables used are `HashSet` and `HashMap`. Used for quick insertion and search. 
 
 ### Hash Sets
+
 Implementation of `set` data structure to store **no repeated values**.
 One common use of hashset is to **check if a value has ever appeared before**
 
 ```java
-// Initialize
+// Constructor
 HashSet<String> set = new HashSet<>(); // Initialize new empty HashSet
 HashSet<String> set = new HashSet<String>(Arrays.asList(list)); // Convert elements of list into hashset
 
+// Operations
 set.add("Hi"); // Adds new string element to set if elementis not already present - return false if otherwise
 set.contains("Hi") // Output: True - Check if key is in hashset
 set.remove(2); // Remove key from set
@@ -168,15 +253,17 @@ for (String i : set) {} // Iterate through hashset
 ```
 
 ### Hash Maps
+
 Implementation of `map` data structure to store `(key, value)` pair. Similar to Python `dict` structure.
 
 Often used for **memoization** in recursion. 
 **memoization**: Store results in cache to prevent calculating a value multiple times
+
 ```java
-// Initialize
+// Constructor
 HashMap <Integer, String> h = new HashMap<>();
 
-// Methods
+// Operations
 h.putIfAbsent(0, "H"); // Insert if key does not already exist
 h.put(3, "Hi"); // Insertion, or update value - returns existing key, null if existing key does not exist
 h.size(); // Get size of map
@@ -196,155 +283,148 @@ for (Map.Entry<Integer, Integer> entry : hashmap.entrySet()) {
     entry.getValue();
 }
 ```
+
+## Trees
+
+### Binary Tree
+
+Preorder Traversal root, left, right
+
+```java
+traverse(root.left);
+nodes.add(root.val);
+traverse(root.right);
+```
+
+Inorder Traversal - left, root, right
+
+```java
+traverse(root.left);
+nodes.add(root.val);
+traverse(root.right);
+```
+
+Postorder Traversal - left, right, root
+
+```java
+traverse(root.left);
+nodes.add(root.val);
+traverse(root.right);
+```
+
+Level-order Traversal - level by level
+Use BFS
+
+### Binary Search Tree
+
+Special form of binary tree, satisfies binary search property.
+
+* Value of each node > value in left subtree
+* Value of node < value in right subtree
+Inorder traversal will be in ascending order
+
+### N-ary Tree
+
+Can be traversed in:
+
+1. Preorder - Root, children
+2. Inorder
+3. Postorder - Children, root
+4. Level order - Level by Level - BFS
+
+#### Recursion on N-ary Tree
+
+Top-down Recursion
+
+Bottom-up Recursion
+
+### Trie
+
+Type of N-ary tree, normally used to store strings.
+
+Insertion
+
+```java
+// pseudocode
+1. Initialize: cur = root
+2. for each char c in target string S:
+3.      if cur does not have a child c:
+4.          cur.children[c] = new Trie node
+5.      cur = cur.children[c]
+6. cur is the node which represents the string S
+```
+
+Searching
+
+```java
+// pseudocode
+1. Initialize: cur = root
+2. for each char c in target string S:
+3.      if cur does not have a child c:
+4.          search fails
+5.      cur = cur.children[c]
+6. search successes
+```
+
+## Graphs
+
+
+
+## Common Techniques
+
 ## Bit Manipulation
+
 * a XOR 0 = a
 * a XOR a = 0
 * a XOR b XOR a = b
+
 ```java
 i ^= x; // XOR operation
 ```
 
 ## Recursion
+
 Steps:
+
 1. Write down **recurrence relationship**
 2. Find base case
 3. Apply **memoization** when possible
 
 **Tail Recursion** - exempted from extra space due to recursion calls
-- Recursive call is the final instruction in recursion function. Only 1 recursive call in function.
 
-## Arrays
-### Initializing new array
+* Recursive call is the final instruction in recursion function. Only 1 recursive call in function.
+
+## Searching
+
+### Binary Search
+
+Steps:
+
+1. Sort if unsorted
+2. Use loop/recursion to divide search space in half after each comparison
+3. Determine viable candidates in remaining space
+
 ```java
-int[] arr = new int[15];
-```
+int binarySearch(int[] nums, int target){
+  if(nums == null || nums.length == 0)
+    return -1;
 
-### For loops
-```java
-for (int i = 0; i < arr.length; i++) {}
+  int left = 0, right = nums.length - 1;
+  while(left <= right){
+    // Prevent (left + right) overflow
+    int mid = left + (right - left) / 2;
+    if(nums[mid] == target){ return mid; }
+    else if(nums[mid] < target) { left = mid + 1; }
+    else { right = mid - 1; }
+  }
 
-// for each value in array
-for (int val : arr) {}
-```
-
-### Copying Arrays
-```java
-arr.clone();
-```
-
-### Sorting 
-```java
-Arrays.sort(arr);
-```
-
-### Call by reference
-
-### Integer limits
-```java
-Integer.MIN_VALUE
-Integer.MAX_VALUE
-```
-
-## Lists
-```java
-List<Integer> nodes = new ArrayList<Integer>();
-```
-
-## Linked Lists
-### Singly Linked List
-```java
-public class Node {
-    int val;
-    Node next;
-    Node(int x) { val = x; }
-}
-```
-
-### Doubly Linked List
-```java
-public class Node {
-    int val;
-    Node next, prev;
-    Node(int x) { val = x; }
-}
-```
-### Two Pointer LL Template
-#### Java
-```java
-// Initialize slow & fast pointers
-ListNode slow = head;
-ListNode fast = head;
-/**
- * Change this condition to fit specific problem.
- * Attention: remember to avoid null-pointer error
- **/
-while (slow != null && fast != null && fast.next != null) {
-    slow = slow.next;           // move slow pointer one step each time
-    fast = fast.next.next;      // move fast pointer two steps each time
-    if (slow == fast) {         // change this condition to fit specific problem
-        return true;
-    }
-}
-return false;   // change return value to fit specific problem
-```
-## Queues
-Queue Implementation using dynamic array
-```java
-// "static void main" must be defined in a public class.
-
-class MyQueue {
-    // store elements
-    private List<Integer> data;         
-    // a pointer to indicate the start position
-    private int p_start;            
-    public MyQueue() {
-        data = new ArrayList<Integer>();
-        p_start = 0;
-    }
-    /** Insert an element into the queue. Return true if the operation is successful. */
-    public boolean enQueue(int x) {
-        data.add(x);
-        return true;
-    };    
-    /** Delete an element from the queue. Return true if the operation is successful. */
-    public boolean deQueue() {
-        if (isEmpty() == true) {
-            return false;
-        }
-        p_start++;
-        return true;
-    }
-    /** Get the front item from the queue. */
-    public int Front() {
-        return data.get(p_start);
-    }
-    /** Checks whether the queue is empty or not. */
-    public boolean isEmpty() {
-        return p_start >= data.size();
-    }     
-};
-
-public class Main {
-    public static void main(String[] args) {
-        MyQueue q = new MyQueue();
-        q.enQueue(5);
-        q.enQueue(3);
-        if (q.isEmpty() == false) {
-            System.out.println(q.Front());
-        }
-        q.deQueue();
-        if (q.isEmpty() == false) {
-            System.out.println(q.Front());
-        }
-        q.deQueue();
-        if (q.isEmpty() chungha== false) {
-            System.out.println(q.Front());
-        }
-    }
+  // End Condition: left > right
+  return -1;
 }
 ```
 
 ### BFS (Breadth First Search)
+
 ```java
 /**
  * Return the length of the shortest path between root and target node.
@@ -371,3 +451,5 @@ int BFS(Node root, Node target) {
     return -1;          // there is no path from root to target
 }
 ```
+
+### DFS (Depth First Search)
