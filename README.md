@@ -25,6 +25,7 @@
   * Recursion
   * BFS (Breadth First Search)
   * DFS (Depth First Search)
+  * Dynamic Programming
 
 ## Common functions
 
@@ -32,9 +33,30 @@
 // Square
 Math.pow(n, 2); // n squared
 Integer.MAX_VALUE;
+Integer.toBinaryString(n); // convert binary integer to string
+
+Math.round(5.8); // Round to nearest integer
+Math.ceil(5.3); // Round up
+Math.floor(5.8); // Round down
+
+// XOR
+0 ^ 1 = 1;
+1 ^ 1 = 0;
 
 // Comparator
 (e1, e2) -> e1.getValue() - e2.getValue();
+
+arr.clone(); // deepcopy array
+
+// Ternery operator
+return (isEven) ? (median + prev)/2.0 : median;
+
+// Generate random number
+Random rand = new Random();
+int rand_int = rand.nextInt(1000); // rand int between 0 and 1000
+double rand_doub = rand.nextDouble();
+
+Math.random(); // get random integer between 0.0 and 1.0
 ```
 
 ## Built-in Libraries
@@ -46,11 +68,15 @@ Integer.MAX_VALUE;
 int[] a = new int[5]; // declare and allocate memory to array
 int[] b = {1,2,3}; // Declare array literal
 
+List<Integer> table = new ArrayList[n]; // Instantiate array of arraylist
+
 // Operations
 a.length;
 
 Arrays.copyOfRange(arr, 0, 2); // Splicing Array
 Arrays.sort(a); // Quicksort, O(n log n) time
+Arrays.sort(intervals, (a, b) -> a[0] - b[0]); // Sort intervals based a, b, where a[0] < b[0]
+
 
 // Checker to empty array
 if (arr.length == 0) return new int[0];
@@ -81,6 +107,17 @@ s1.substring(3,8); // Splice from position 3 inclusive to 8 (non inclusive)
 
 // Casting
 int a = s1.charAt(0) - '0' // Get number from digits 0 - 9 based off ascii characters
+```
+
+#### Character
+
+Useful character functions
+
+```java
+Character.isLetter(char ch); // Returns true if character is a letter
+Character.isLetterOrDigit(char ch); // Returns true if letter or digit
+Character.toUpperCase(char ch); // Converts character to uppercase
+
 ```
 
 #### Char Array
@@ -136,11 +173,13 @@ v1.size(); // Get length
 v1.get(0); // Get element at index 0
 v1.set(1, 2); // Set element at index 1 to be 2
 v1.add(4); // Add element 4 to end of vector
-v1.add(1, 3); // Add element 3 at index 1 
+v1.add(1, 3); // Add element 3 at index 1
 v1.remove(v1.size() - 1); // Remove element at last index
 
 // Sorting
 collections.sort(v1); // Sort array v1
+
+v1.toArray(new int[v1.size()]); // Convert arraylist to array
 ```
 
 ### Linked List
@@ -231,7 +270,7 @@ Queue<Map.Entry<Integer,Integer>> heap = new PriorityQueue<>((a, b) -> b.getValu
 
 ## Hash Tables
 
-Types of hashtables used are `HashSet` and `HashMap`. Used for quick insertion and search. 
+Types of hashtables used are `HashSet` and `HashMap`. Used for quick insertion and search.
 
 ### Hash Sets
 
@@ -245,6 +284,7 @@ HashSet<String> set = new HashSet<String>(Arrays.asList(list)); // Convert eleme
 
 // Operations
 set.add("Hi"); // Adds new string element to set if elementis not already present - return false if otherwise
+set.size(); // Get number of elements in hashset
 set.contains("Hi") // Output: True - Check if key is in hashset
 set.remove(2); // Remove key from set
 set.clear(); // Clear hashset
@@ -266,7 +306,7 @@ HashMap <Integer, String> h = new HashMap<>();
 // Operations
 h.putIfAbsent(0, "H"); // Insert if key does not already exist
 h.put(3, "Hi"); // Insertion, or update value - returns existing key, null if existing key does not exist
-h.size(); // Get size of map
+h.size(); // Get size of map (number of key-value pairs)
 h.get(3); // Gets value associated with key
 h.getOrDefault(key, defaultValue); // get value, return default if key not in hashmap
 h.remove(3); // Delete key
@@ -368,15 +408,43 @@ Searching
 
 ## Graphs
 
-
-
 ## Common Techniques
 
 ## Bit Manipulation
 
-* a XOR 0 = a
-* a XOR a = 0
-* a XOR b XOR a = b
+### Operators
+
+```java
+// Bitwise Operators
+a | b // OR
+a & b // AND
+a ^ b // XOR
+~a // Complement of a (~0101 = 1010)
+
+// Shift Operators - Used to shift bits left or right
+// Equivalent to multiplying or dividing by 2
+
+// Shift Right - fills 0 in void on left
+a >> 1 // Divides a by 2 (Preserves sign)
+
+// Unsigned right shift - fills 0 in void on left
+a >>> 1 // Shifts right, does not preserve sign bit
+
+// Shift left
+a << 1 // Shifts bits of number to left, fills 0 in void - Multiplies with some power of 2
+
+a << 1 // a = 5, a << 1 = 10
+a << 2 // = 20
+
+```
+
+XOR useful functions
+
+* a ^ 0 = a
+* a ^ a = 0
+* a ^ b ^ a = b
+
+
 
 ```java
 i ^= x; // XOR operation
@@ -393,6 +461,132 @@ Steps:
 **Tail Recursion** - exempted from extra space due to recursion calls
 
 * Recursive call is the final instruction in recursion function. Only 1 recursive call in function.
+
+### Divide and Conquer
+
+Recursively breaks down problem into 2 or more subproblems until subproblem can be solved directly
+
+Steps:
+
+1. **Divide** into set of subproblems
+2. **Conquer** Solve each subproblem recursively
+3. **Combine** results of each subproblem
+
+Important to figure out the **recurrence relationship** between subproblems and the original problem
+
+#### Mergesort
+
+Time complexity is O(N log N). Space complexity is O(N)
+
+```java
+private int[] merge(int[] left, int[] right) {
+    int[] merged = new int[left.length + right.length];
+    int leftPtr = 0;
+    int rightPtr = 0;
+    int mergedPtr = 0;
+
+    while (leftPtr < left.length && rightPtr < right.length) {
+        if (left[leftPtr] < right[rightPtr]) merged[mergedPtr++] = left[leftPtr++];
+        else merged[mergedPtr++] = right[rightPtr++];
+    }
+
+    // Add whats left to array
+    while (leftPtr < left.length) merged[mergedPtr++] = left[leftPtr++];
+    while (rightPtr < right.length) merged[mergedPtr++] = right[rightPtr++];
+
+    return merged;
+}
+
+public int[] sortArray(int[] nums) {
+    if (nums.length <= 1) return nums;
+
+    int pivot = nums.length / 2;
+
+    // divide
+    int[] left = sortArray(Arrays.copyOfRange(nums, 0, pivot));
+    int[] right = sortArray(Arrays.copyOfRange(nums, pivot, nums.length));
+
+    // Merge back
+    return merge(left, right);
+}
+
+```
+
+#### Quicksort
+
+Steps:
+
+1. **Partitioning** Pick a pivot to divide list into 2 sublists, all values left of pivot is lower than pivot. Choose 1st element, or randomly pick element
+2. Recursively sort sublists. Base case is when input list is empty or contains just 1 element.
+3. Concatenate sorted sublists
+
+```java
+public void quickSort(int [] lst) {
+    /* Sorts an array in the ascending order in O(n log n) time */
+    int n = lst.length;
+    qSort(lst, 0, n - 1);
+}
+
+private void qSort(int [] lst, int lo, int hi) {
+    if (lo < hi) {
+        int p = partition(lst, lo, hi);
+        qSort(lst, lo, p - 1);
+        qSort(lst, p + 1, hi);
+    }
+}
+
+private int partition(int [] lst, int lo, int hi) {
+    /*
+        Picks the last element hi as a pivot
+        and returns the index of pivot value in the sorted array */
+    int pivot = lst[hi];
+    int i = lo;
+    for (int j = lo; j < hi; ++j) {
+        if (lst[j] < pivot) {
+        int tmp = lst[i];
+        lst[i] = lst[j];
+        lst[j] = tmp;
+        i++;
+        }
+    }
+    int tmp = lst[i];
+    lst[i] = lst[hi];
+    lst[hi] = tmp;
+    return i;
+}
+
+```
+
+#### Master Theorem
+
+Finds asymptotic analysis of many recursive algorithms
+
+### Backtracking
+
+Choice - Defining decision space
+Constraints - Directing recursion
+Goals - When recursion bottoms out
+
+### Dynamic Programming
+
+Bottom-up approach to recursion. Template (building iteratively):
+
+```java
+
+// Fibonacci number
+if (nums.length == 0) return 0;
+
+int dp[] = new int[nums.length + 1];
+dp[0] = 1;
+dp[1] = 1;
+
+for (int i = 2; i < dp.length; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2];
+}
+
+return dp[nums.length];
+
+```
 
 ## Searching
 
@@ -421,6 +615,29 @@ int binarySearch(int[] nums, int target){
   // End Condition: left > right
   return -1;
 }
+```
+
+#### Backtracking
+
+Builds candidates to solution and abandons candidate as soon as solution cannot be valid.
+
+```python
+ backtrack_nqueen(row = 0, count = 0):
+    for col in range(n):
+        # iterate through columns at the curent row.
+        if is_not_under_attack(row, col):
+            # explore this partial candidate solution, and mark the attacking zone
+            place_queen(row, col)
+            if row + 1 == n:
+                # we reach the bottom, i.e. we find a solution!
+                count += 1
+            else:
+                # we move on to the next row
+                count = backtrack(row + 1, count)
+            # backtrack, i.e. remove the queen and remove the attacking zone.
+            remove_queen(row, col)
+    return count
+
 ```
 
 ### BFS (Breadth First Search)
@@ -453,3 +670,22 @@ int BFS(Node root, Node target) {
 ```
 
 ### DFS (Depth First Search)
+
+```java
+/*
+ * Return true if there is a path from cur to target.
+ */
+boolean DFS(Node cur, Node target, Set<Node> visited) {
+    return true if cur is target;
+    for (next : each neighbor of cur) {
+        if (next is not in visited) {
+            add next to visted;
+            return true if DFS(next, target, visited) == true;
+        }
+    }
+    return false;
+}
+
+```
+
+
