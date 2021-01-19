@@ -1,122 +1,115 @@
-# C++ Cheatsheet for Algorithms and Data Structures
+# C++ Syntax
 
-## Arrays
-### Initializing new array
+## Contents
+* Basic Syntax
+  * Basic
+  * Input/Output
+* Operators
+  * Conditional Operators
+  * Arithmetic Operators
+* Functions
+* Pointers
+
+## Basic Syntax
+
+### Basic
+```c++
+// Comments
+
+/* multi line
+ comment */
+
+// Importing Libraries
+#include <Library> // Search in include path list first
+#include "Library" // Search in current directory first
+
+// Common Libraries
+#include <iostream> // cout
+#include <vector> // Resizable arrays
+#include <string> // Strings
+```
+### Input/Output
+
+2 types of input/output: `printf` and `scanf`, `cout` and `cin'
+
+```c++
+// printf/scanf is a input/output from C
+// d - int, ld - long, c - char, f - float, lf - double
+
+scanf("%d %ld %c %f %lf", &n, &l, &ch, &f, &d); // Read character and double type
+
+printf("Hello, World!"); // printing
+printf("%d, %ld, %c, %f, %lf", n, l, ch, f, d); // print variables
+
+// cout/cin
+// input to int then int type
+std::cin >> n1 >> n2;
+
+// Print to stdout
+std::cout << n << std::endl;
+
+```
+## Operators
+
+### Conditional Operators
+
+```c++
+if (condition1) {}
+else if (condition2) {}
+else {}
 ```
 
-```
+### Arithmetic Operators
+`+` - Addition
+`-` - Subtraction
+`*` - Multiplication
+`/` - Division (follows type of variables)
+`*Math.pow(x, 2)` - Exponent
+`%` Modulus - Returns division remainder
 
-### For loops
-```
-for (int i = 0; i < arr.length; i++) {}
-```
-
-### Copying Arrays
-```
-
-```
-
-### Sorting 
-```
-
-```
-
-### Call by reference
-
-### Integer limits
-```
+** Division follows type of variables
+```c++
+int z = 5/2 // z = 2
+float f = 5/2 // f = 2
+// Cast 2 to float type
+float fl = 5/(float) 2; // fl = 2.5 
 
 ```
 
-## Lists
+### Loops
+```c++
+// Loop through array (c type array)
+for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {}
+
+// Loop through c++ array, resizable array (std::array, std::vector)
+for (int i = 0; i < arr.size(); i++) {}
 ```
 
-```
-
-## Linked Lists
-### Singly Linked List
-```
-sturct Node {
-    int val;
-    Node *next;
-    Node(int x) : val(x), next(NULL) {}
+## Functions
+```cpp
+type function(int parameter) {
+  return someType;
 }
 ```
 
-### Doubly Linked List
-```
-sturct Node {
-    int val;
-    Node *next, *prev;
-    Node(int x) : val(x), next(NULL),prev(NULL) {}
-}
-```
-### Two Pointer LL Template
+## Pointer
+Used to share memory address among different context/functions. Used when functions need to modify content of variable but does not have ownership.
 
-## Built in Linked List Library
+Note: Only use pointers when needed (mostly in these situations): 
+1. Need object to outlive current scope. Make copy of object if possible.
+2. Need to allocate a lot of memory.
 
+```cpp
+&val; // access memory address
+int *p = &val; // assign memory address of val to pointer p
 
-## Queues
-Queue Implementation
-```
-#include <iostream>
-
-class MyQueue {
-    private:
-        // store elements
-        vector<int> data;       
-        // a pointer to indicate the start position
-        int p_start;            
-    public:
-        MyQueue() {p_start = 0;}
-        /** Insert an element into the queue. Return true if the operation is successful. */
-        bool enQueue(int x) {
-            data.push_back(x);
-            return true;
-        }
-        /** Delete an element from the queue. Return true if the operation is successful. */
-        bool deQueue() {
-            if (isEmpty()) {
-                return false;
-            }
-            p_start++;
-            return true;
-        };
-        /** Get the front item from the queue. */
-        int Front() {
-            return data[p_start];
-        };
-        /** Checks whether the queue is empty or not. */
-        bool isEmpty()  {
-            return p_start >= data.size();
-        }
-};
-
-int main() {
-    MyQueue q;
-    q.enQueue(5);
-    q.enQueue(3);
-    if (!q.isEmpty()) {
-        cout << q.Front() << endl;
-    }
-    q.deQueue();
-    if (!q.isEmpty()) {
-        cout << q.Front() << endl;
-    }
-    q.deQueue();
-    if (!q.isEmpty()) {
-        cout << q.Front() << endl;
-    }
-}
-```
-### Built in Queue Library
-```
-queue<int> q; // Initialize new queue
-
-q.push(5); // Enqueue
-q.pop() // Dequeue
-q.empty(); // Boolean Check if queue is empty
-q.front() // Get first element of queue
-q.size() // Get size of queue
 ```
 
+## Namespace
+
+Used to organize classes.
+
+Namespace vs class
+Classes are data types - expands structures, contains data members and functions as members.
+
+Namespaces cannot be created as object - more or a naming convention. Used to define a scope so idientifiers don't clash (same named identifiers.)

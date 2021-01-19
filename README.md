@@ -1,4 +1,4 @@
-# Algorithms and Data Structures
+# Java Algorithms and Data Structures 
 
 ## Table of Contents
 
@@ -26,15 +26,22 @@
   * BFS (Breadth First Search)
   * DFS (Depth First Search)
   * Dynamic Programming
+  * Greedy Algorithms
 
-## Common functions
+## Common Functions
 
 ```java
-// Square
+// Power
 Math.pow(n, 2); // n squared
-Integer.MAX_VALUE;
-Integer.toBinaryString(n); // convert binary integer to string
 
+// Max, Min Integer
+Integer.MAX_VALUE;
+Integer.MIN_VALUE;
+
+// Convert binary integer to string
+Integer.toBinaryString(n); 
+
+// Rounding
 Math.round(5.8); // Round to nearest integer
 Math.ceil(5.3); // Round up
 Math.floor(5.8); // Round down
@@ -57,6 +64,9 @@ int rand_int = rand.nextInt(1000); // rand int between 0 and 1000
 double rand_doub = rand.nextDouble();
 
 Math.random(); // get random integer between 0.0 and 1.0
+
+// Casting
+int a = (int) someFloat; // cast float to int
 ```
 
 ## Built-in Libraries
@@ -80,6 +90,9 @@ Arrays.sort(intervals, (a, b) -> a[0] - b[0]); // Sort intervals based a, b, whe
 
 // Checker to empty array
 if (arr.length == 0) return new int[0];
+
+// Static Initialization, return
+return new int[] {map.get(nums[i]), i};
 ```
 
 ### Strings
@@ -419,7 +432,7 @@ Searching
 a | b // OR
 a & b // AND
 a ^ b // XOR
-~a // Complement of a (~0101 = 1010)
+~a // NOT Complement of a (~0101 = 1010)
 
 // Shift Operators - Used to shift bits left or right
 // Equivalent to multiplying or dividing by 2
@@ -563,6 +576,7 @@ Finds asymptotic analysis of many recursive algorithms
 
 ### Backtracking
 
+"Generate All", "Compute All" type qns - normally exponential time
 Choice - Defining decision space
 Constraints - Directing recursion
 Goals - When recursion bottoms out
