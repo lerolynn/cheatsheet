@@ -5,20 +5,20 @@
 * Common Functions
 * Built-in Libraries
   * Array
-    * String
-      * Char Array
-      * StringBuilder
-    * Dynamic Array
-    * Linked List
-    * Stack and Queue
-      * Stack
-      * Queue
-    * HashTables
-      * HashSet
-      * HashMap
-    * Trees
-    * Graphs
-    * Searching
+  * String
+    * Char Array
+    * StringBuilder
+  * Dynamic Array
+  * Linked List
+  * Stack and Queue
+    * Stack
+    * Queue
+  * HashTables
+    * HashSet
+    * HashMap
+  * Trees
+  * Graphs
+  * Searching
 
 * Techniques
   * Bit Manipulations
@@ -255,6 +255,7 @@ q.offer(5); // Queue new element
 q.poll(); // Dequeue
 q.peek(); // Get first element, return null if queue is empty
 q.size(); // Get size of queue
+q.isEmpty(); // Returns true if queue is empty
 ```
 
 ### Priority Queue
@@ -271,6 +272,8 @@ pq.add(10); // Add items
 pq.peek(); // get min item of pq
 pq.poll(); // get and remove item
 
+pq.isEmpty(); // Check if pq is empty
+pq.size(); // Returns size of pq
 ```
 
 Implementing **max heap**

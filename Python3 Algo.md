@@ -5,22 +5,22 @@
 * Common Functions
 * Built-in Libraries
   * Array
-    * String
-      * Char Array
-      * StringBuilder
-    * Dynamic Array
-    * Linked List
-    * Stack and Queue
-      * Stack
-      * Queue
-    * HashTables
-      * HashSet
-      * HashMap
-    * Trees
-    * Graphs
-    * Searching
+  * String
+    * Char Array
+    * StringBuilder
+  * Dynamic Array
+  * Linked List
+  * Stack and Queue
+    * Stack
+    * Queue
+  * HashTables
+    * HashSet
+    * HashMap
+  * Trees
+  * Graphs
+  * Searching
 
-## Common Functions
+## Common Built-in Functions
 
 ```python
 # Power
@@ -64,10 +64,44 @@ def greeting(name: str) -> str:
 # Assignment
 nums = foo # Rebinds name nums to same object that foo refers to
 nums[:] = foo # Makes copy of contents of original object
+
+# Data type conversion
+int(1.23) # Casts to 1
+float(1) # Cast to 1.0
+
+bool(1) # Returns true unless object is empty, False, 0, None
+enumerate(lis) # Takes a collection and returns as list of (index, item)
+min() # Returns smallest item in iterable
+pow(x, 2) # Returns x square
+range(start, end, increment) # Returns sequence of numbers
+reversed(lis) # Returns reversed list
+sorted(lis) # Returns sorted list
+str(123) # Convert to string
+sum(lis) # Sums items in iterator
+zip(it1, it2, ..) # Paris items in iterators into tuples
 ```
 
+### String Methods
 
-## Common Libraries - Python-specific Libraries
+```python
+s.capitalize() # Convert 1st character to uppercase
+s.count("hi") # Count no of times "hi" appears in string
+s.find("hi") # Returns 1st occurrence of "hi", -1 if value not found
+
+s.isalnum() # Returns True if all characters are alphanumeric
+s.isalpha() # Returns True if all characters are in alphabet
+s.isdigit() # Returns True if all are digits
+s.lower() # Convert to lower case
+s.upper() # Convert to upper case
+s.title() # Convert 1st charactr of each word to uppercase
+s.swapcase() # Convert lower to uppercase, upper to lower
+
+s.strip() # Removes any leading and trailing whitespaces
+s.split() # Split string into list of words at whitespaces
+s.split(",") # Split string at ","
+```
+
+## Common Libraries - Python Methods
 
 ### Built-in data types - Iterable
 
@@ -135,12 +169,14 @@ list(collection) # Convert any collection datatype to list
 # Looping
 for x in lis:
   pass 
-
+range
 for i in range(len(lis)): # i will give the index
   pass # lis[i] will give the item
 
 for i, j in enumerate(lis): # i is the index, j is the value
   pass
+
+for i in range(len(digits)-1, -1, -1): # Loop in reverse
 ```
 
 #### Tuples
@@ -265,24 +301,97 @@ dic2 = dict(dic)
 Python does not have C++/Java style fixed-sized arrays. Use Python lists instead.
 
 ### Strings
-#### Character
+
+Use python built-in library for strings.
 
 
 ### Linked List
 
+```python
+# Creating Linked Lists
+class Node:
+  def __init__(self, val=None):
+  self.val = val
+  self.next = None
+
+class LinkedList:
+  def __init__(self):
+    self.head = None
+
+ll = LikedList()
+ll.head = Node("Mon")
+node2 = Node("Tue")
+node3 = Node("Wed")
+
+ll.head.next = node2
+node2.next = node3
+
+# Traversing Linked List
+ptr = ll.head
+while ptr is not None:
+  ptr = ptr.next
+```
 
 ## Stacks and Queues
+
 ### Stacks
+
+Stacks can be implemented using built-in Lists or Deque library
+
+```python
+# Stack using list
+stack = []
+
+stack.append('a') # Push
+stack.pop() # Pop
+stack[-1] # Peek
+len(stack) == 0 # Empty
+
+# Stack using deque
+from collections import deque
+stack = deque()
+
+stack.append('a') # Push
+stack.pop() # Pop
+```
+
 ### Queues
+
+Queues can be implemented using built-in Lists, collections.deque library or queue.Queue
+
+```python
+# Queue using list
+queue = []
+q.append('a') # Queue
+queue.pop(0) # Deque
+queue[0] # Peek
+
+# Queue using deque
+from collections import deque
+queue = deque()
+q.append('a') # Queue
+q.popleft() # Deque
+
+# Queue using queue.Queue
+queue = Queue()
+q.put('a') # Queue
+q.get() # Deque
+q.empty() # Returns true if queue is empty
+q.size()
+
+```
+
 ### Priority Queue
 
 
 ## Hash Tables
 ### Hash Sets
+
+Use Python's built-in set
+
 ### Hash Maps
 
 Dictionaries are the equivalent of Hash Maps in Python.
-
 
 ## Trees
 ### Binary Tree
