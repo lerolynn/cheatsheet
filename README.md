@@ -28,6 +28,8 @@
   * Dynamic Programming
   * Greedy Algorithms
 
+* Others
+
 ## Common Functions
 
 ```java
@@ -67,6 +69,15 @@ Math.random(); // get random integer between 0.0 and 1.0
 
 // Casting
 int a = (int) someFloat; // cast float to int
+
+// Pairs
+Pair<Integer, Integer> p1 = new Pair(3,4);
+p1.getKey();
+p1.getValue();
+
+// Get sign
+int sign = (int) Math.signum(a);
+int sign = Integer.signum(-123);
 ```
 
 ## Built-in Libraries
@@ -85,7 +96,8 @@ a.length;
 
 Arrays.copyOfRange(arr, 0, 2); // Splicing Array
 Arrays.sort(a); // Quicksort, O(n log n) time
-Arrays.sort(intervals, (a, b) -> a[0] - b[0]); // Sort intervals based a, b, where a[0] < b[0]
+Arrays.sort(list, Comparator.reverseOrder()); // Sort in descending order - only for objects
+Arrays.sort(intervals, (a, b) -> a[0] - b[0]); // Sort intervals based a, b, where a[0] < b[0] -> In nested array, sort based on element in index 0
 
 
 // Checker to empty array
@@ -158,6 +170,8 @@ String s = String.valueOf(arr); // Convert character array to string
 
 str.setLength(0); // clear string builder
 
+str.deleteCharAt(str.length()-1);
+
 // Split string - (n < 0 - don't remove empty string; n > 0; split max n times)
 String[] arr = s.split("," 0); // Split into array of max size, remove trailing empty strings
 s.trim(); // Eliminate trailing whitespaces
@@ -181,6 +195,8 @@ List<Integer> v1 = new ArrayList<>(Arrays.asList(a)); // Cast array a to vector
 List<Integer> v2 = v1; // Reference to v1
 List<Integer> v3 = new ArrayList<>(v1) // Make actual copy of v1
 
+Arrays.asList(nums[0], nums[1], nums[2]);
+
 // Operations
 v1.size(); // Get length
 v1.get(0); // Get element at index 0
@@ -190,7 +206,7 @@ v1.add(1, 3); // Add element 3 at index 1
 v1.remove(v1.size() - 1); // Remove element at last index
 
 // Sorting
-collections.sort(v1); // Sort array v1
+Collections.sort(v1); // Sort array v1
 
 v1.toArray(new int[v1.size()]); // Convert arraylist to array
 ```
@@ -398,6 +414,32 @@ Bottom-up Recursion
 
 Type of N-ary tree, normally used to store strings.
 
+Implementation (Using Hashmap)
+
+```java
+class Node {
+    char c;
+    HashMap<Character, Node> children;
+    boolean flag;
+    Node(char c) {
+        this.c = c;
+        this.flag = false;
+        this.children = new HashMap<>();
+    } 
+}
+
+```
+
+Implementation using array
+```java
+class TrieNode {
+    TrieNode[] children;
+    TrieNode() {
+        this.children = new Node[26];
+    }
+}
+```
+
 Insertion
 
 ```java
@@ -579,13 +621,40 @@ Finds asymptotic analysis of many recursive algorithms
 
 ### Backtracking
 
+Uses brute force approach - try out all possible solutions
+Types: Branch and Bound - BFS
+Backtracking - DFS
+Exponential time complexity
+o(n) time complexity
+
 "Generate All", "Compute All" type qns - normally exponential time
 Choice - Defining decision space
 Constraints - Directing recursion
 Goals - When recursion bottoms out
 
+Backtracking template
+```java
+private void backtrack(List<String> ans, String current_string, int max) {
+    if () { // some basecase
+        ans.add(current_string); // add to list when basecase is hit 
+        // ans.add(new ArrayList<cur>); // Add new arraylist if its array/ dynamic array
+        return;
+    }
+
+    // Decision - generate permutations, call all possible decisions
+}
+
+public List<String> mainCode(int n) {
+    List<String> ans = new ArrayList();
+    backtrack(ans, "", n);
+    return ans;
+}
+
+```
+
 ### Dynamic Programming
 
+brute force approach for optimization problems
 Bottom-up approach to recursion. Template (building iteratively):
 
 ```java
@@ -686,6 +755,21 @@ int BFS(Node root, Node target) {
 }
 ```
 
+#### BFS in Grid
+
+Note: Store (i,j) coordinate as an array int[]{i,j}.
+```java
+Queue<int[]> q = new LinkedList<>();
+
+int[][] dirs = {{-1,0}, {1,0},{0,-1},{0,1}};
+q.offer(new int{i,j});
+
+// Initialize default boolean array is false
+boolean[][] visited = new boolean[dirs.length][dirs[0].length];
+
+// Bounds checking
+if (r < 0 || r >= matrix.length || c < 0 || c >= matrix[0].length || matrix[r][c] <= matrix[cur[0]][cur[1]] + 1) continue;
+```
 ### DFS (Depth First Search)
 
 ```java
@@ -705,4 +789,18 @@ boolean DFS(Node cur, Node target, Set<Node> visited) {
 
 ```
 
+### Greedy Algorithms
+Choose largest value first
 
+## Others
+### Creating new abstract data type
+```java
+public class Node {
+    int val;
+    Node next;
+    Node(){};
+    Node(int val) { this.val = val; }
+    Node(int val, Node next) { this.val = val; this.next = next; }
+}
+
+```

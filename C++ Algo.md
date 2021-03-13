@@ -70,6 +70,13 @@ void func(vector<int> vect) {}
 // Pass large arrays, vectors etc by reference
 void func(vector<int> &vect) {}
 
+// Pairs
+std::pair<int, int> pair;
+pair.first = 1;
+pair.second = 2;
+
+std::pair<int, int> pair2(1,2);
+
 ```
 
 ## Common Libraries (C++ Standard Library)

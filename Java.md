@@ -1,5 +1,11 @@
 # Java Syntax, Implementation
+## NOTE
+Objects are passed by reference!! Arrays are also objects - every value of non-primitive types are objects
 
+wrapper types - java has wrapper types for each primitive type.
+Contains functions toString(), compareTo(), equals(), hashCode()
+
+equals() function is equivalence relation, is not null
 ## Arrays
 ### Initializing new array
 ```java
